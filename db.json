@@ -1,0 +1,175 @@
+{
+  "restaurants": [
+    {
+      "id": "1",
+      "name": "고래한입피자&비츠샐러드(청량리점)",
+      "category": "양식",
+      "distance": 88,
+      "representativeMenu": "파스타/샐러드",
+      "price": 10900,
+      "rating": null,
+      "reviewCount": 0
+    },
+    {
+      "id": "2",
+      "name": "아비꼬(서울청량리점)",
+      "category": "일식",
+      "distance": 88,
+      "representativeMenu": "카레",
+      "price": 10500,
+      "rating": null,
+      "reviewCount": 0
+    },
+    {
+      "id": "3",
+      "name": "아소정(청량리점)",
+      "category": "한식",
+      "distance": 90,
+      "representativeMenu": "뚝불냉면",
+      "price": 12000,
+      "rating": null,
+      "reviewCount": 0
+    },
+    {
+      "id": "4",
+      "name": "버거앤타코",
+      "category": "양식",
+      "distance": 92,
+      "representativeMenu": "버거 세트",
+      "price": 9400,
+      "rating": null,
+      "reviewCount": 0
+    },
+    {
+      "id": "5",
+      "name": "순대실록(청량리점)",
+      "category": "한식",
+      "distance": 245,
+      "representativeMenu": "순대국",
+      "price": 10000,
+      "rating": null,
+      "reviewCount": 0
+    },
+    {
+      "id": "6",
+      "name": "엄나무골 삼계탕",
+      "category": "한식",
+      "distance": 260,
+      "representativeMenu": "반계탕",
+      "price": 10000,
+      "rating": null,
+      "reviewCount": 0
+    },
+    {
+      "id": "7",
+      "name": "육도락 청량리역점",
+      "category": "한식",
+      "distance": 254,
+      "representativeMenu": "불고기덮밥",
+      "price": 12000,
+      "rating": null,
+      "reviewCount": 0
+    },
+    {
+      "id": "8",
+      "name": "봉평메밀막국수",
+      "category": "한식",
+      "distance": 278,
+      "representativeMenu": "메밀막국수",
+      "price": 10000,
+      "rating": null,
+      "reviewCount": 0
+    },
+    {
+      "id": "9",
+      "name": "중국성",
+      "category": "중식",
+      "distance": 404,
+      "representativeMenu": "탕짜면",
+      "price": 10000,
+      "rating": null,
+      "reviewCount": 0
+    },
+    {
+      "id": "10",
+      "name": "시카고 커리",
+      "category": "일식",
+      "distance": 411,
+      "representativeMenu": "커리",
+      "price": 14000,
+      "rating": null,
+      "reviewCount": 0
+    },
+    {
+      "id": "11",
+      "name": "육쌈냉면(청량리점)",
+      "category": "한식",
+      "distance": 415,
+      "representativeMenu": "냉면/고기",
+      "price": 10000,
+      "rating": null,
+      "reviewCount": 0
+    },
+    {
+      "id": "12",
+      "name": "청마루한우숯불갈비",
+      "category": "한식",
+      "distance": 416,
+      "representativeMenu": "김치찌개/오삼불고기",
+      "price": 10000,
+      "rating": null,
+      "reviewCount": 0
+    },
+    {
+      "id": "13",
+      "name": "또또꼬마김밥 동대문구청점",
+      "category": "한식",
+      "distance": 417,
+      "representativeMenu": "김밥",
+      "price": 10000,
+      "rating": null,
+      "reviewCount": 0
+    },
+    {
+      "id": "14",
+      "name": "롯데리아 청량리",
+      "category": "양식",
+      "distance": 430,
+      "representativeMenu": "버거 세트",
+      "price": 10000,
+      "rating": null,
+      "reviewCount": 0
+    },
+    {
+      "id": "15",
+      "name": "홍가네",
+      "category": "한식",
+      "distance": 447,
+      "representativeMenu": "부대찌개",
+      "price": 12000,
+      "rating": null,
+      "reviewCount": 0
+    },
+    {
+      "id": "16",
+      "name": "경동밥상",
+      "category": "한식",
+      "distance": 451,
+      "representativeMenu": "한식뷔페",
+      "price": 10000,
+      "rating": null,
+      "reviewCount": 0
+    },
+    {
+      "id": "17",
+      "name": "버거킹(동대문구청점)",
+      "category": "양식",
+      "distance": 500,
+      "representativeMenu": "버거 세트",
+      "price": 10000,
+      "rating": null,
+      "reviewCount": 0
+    }
+  ],
+  "reviews": []
+}
