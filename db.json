@@ -171,5 +171,15 @@
       "reviewCount": 0
     }
   ],
-  "reviews": []
+  "reviews": [
+    {
+      "restaurantId": "2",
+      "rating": 5,
+      "content": "맛있엉",
+      "menu": "고기",
+      "price": 10000,
+      "id": "L7Rk84KjmMg"
+    }
+  ],
+  "$schema": "./node_modules/json-server/schema.json"
 }
