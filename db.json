@@ -176,9 +176,25 @@
       "restaurantId": "2",
       "rating": 5,
       "content": "맛있엉",
-      "menu": "고기",
+      "menu": "카레",
       "price": 10000,
-      "id": "L7Rk84KjmMg"
+      "id": "jMHRrPkgR9Q"
+    },
+    {
+      "restaurantId": "3",
+      "rating": 5,
+      "content": "양많고맛있음",
+      "menu": "뚝불",
+      "price": 12000,
+      "id": "zQzsOAMLEw0"
+    },
+    {
+      "restaurantId": "3",
+      "rating": 4,
+      "content": "맛있음",
+      "menu": "비빔면",
+      "price": 12000,
+      "id": "35dtsBBDTB0"
     }
   ],
   "$schema": "./node_modules/json-server/schema.json"

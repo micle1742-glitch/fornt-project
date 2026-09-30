@@ -1,6 +1,14 @@
+
+import { useRouter } from "next/navigation"; 
+
 export default function RestaurantCard({ restaurant }) {
+  {/**페이지 이동을 위한 라우터 */}
+  const router = useRouter();
   return (
-    <div className="restaurant-card">
+    <div className="restaurant-card"
+        onClick={() => {
+          router.push(`/review?id=${restaurant.id}`)  //코드를 실행해서 다른 URL로 이동시킨다.
+        }}>
     <div className="restaurant-image"></div>
 
     <div className="restaurant-info">

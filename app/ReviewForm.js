@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 
 export default function ReviewForm() {
     const [selectedRestaurantId, setSelectedRestaurantId] = useState("");
@@ -11,6 +11,10 @@ export default function ReviewForm() {
     const API_URL = "http://localhost:4000";
     const [menu, setMenu] = useState("");
     const [price, setPrice] = useState("");
+    const queryClient = useQueryClient();
+    const [showReviews, setShowReviews] = useState(false);
+
+
 
 
     {/**서버에 식당 데이터를 요청한다 → 서버 응답을 받는다 → 그 응답을 JSON 데이터로 변환한다. 
@@ -69,9 +73,12 @@ export default function ReviewForm() {
         if (!response.ok) {
             throw new Error("리뷰 등록에 실패했습니다")
         }
+        queryClient.invalidateQueries({
+            queryKey: ["reviews"]
+        });
+        setShowReviews(true);
 
         {/**폼 초기화 검색창도*/ }
-        setSelectedRestaurantId("")
         setRestaurantSearch("")
         setRating(0)
         setContent("")
@@ -83,97 +90,140 @@ export default function ReviewForm() {
         return restaurant.name.includes(restaurantSearch);
     });
 
-    {/** */ }
+    {/**선택한 식당 자체를 가져오는 것 */ }
     const selectedRestaurant = restaurants.find((restaurant) => {
         return restaurant.id === selectedRestaurantId;
     });
+    {/** 선택한 식당의 리뷰만 가져오기*/ }
+    const selectedRestaurantReviews = reviews?.filter((review) => {
+        return review.restaurantId === selectedRestaurantId;
+    }) || [];
+
+    {/** 리뷰 삭제 함수 */ }
+    const handleDeleteReview = async (reviewId) => {
+        const response = await fetch(`${API_URL}/reviews/${reviewId}`, {
+            method: "DELETE",
+        })
+
+        if (!response.ok) {
+            throw new Error("리뷰 삭제에 실패했습니다.")
+        }
+        {/** 삭제데이터 React Query에게알려주기 */ }
+        queryClient.invalidateQueries({
+            queryKey: ["reviews"]
+        });
+
+    };
+
 
     return (
         <div>
             {/**식당 선택 */}
-            <div>
-                <label>식당 선택</label>
-                <input
-                    value={restaurantSearch}
-                    onChange={(e) => {
-                        setRestaurantSearch(e.target.value)
-                        setSelectedRestaurantId("")
-                    }}
-                    placeholder="식당을 검색하세요"
-                />
+            {!showReviews && (
 
-                {/** filteredRestaurants의 식당을 하나씩 꺼내 restaurant라는 이름으로 사용하고 
+                <div>
+                    <label>식당 선택</label>
+                    <input
+                        value={restaurantSearch}
+                        onChange={(e) => {
+                            setRestaurantSearch(e.target.value)
+                            setSelectedRestaurantId("")
+                        }}
+                        placeholder="식당을 검색하세요"
+                    />
+
+                    {/** filteredRestaurants의 식당을 하나씩 꺼내 restaurant라는 이름으로 사용하고 
                 각 식당마다 div를 하나씩 만들어라*/}
-                {!selectedRestaurantId && restaurantSearch && filteredRestaurants.map((restaurant) => (
+                    {!selectedRestaurantId && restaurantSearch && filteredRestaurants.map((restaurant) => (
 
-                    <div key={restaurant.id}>
-                        {/**식당이름화면에보여줌 식당id데이터연결용으로저장 */}
-                        <button
-                            type="button"
-                            onClick={() => {
-                                setSelectedRestaurantId(restaurant.id)
-                                setRestaurantSearch(restaurant.name)
-                            }}
-                        >
-                            {restaurant.name}
-                        </button>
+                        <div key={restaurant.id}>
+                            {/**식당이름화면에보여줌 식당id데이터연결용으로저장 */}
+                            <button
+                                type="button"
+                                onClick={() => {
+                                    setSelectedRestaurantId(restaurant.id)
+                                    setRestaurantSearch(restaurant.name)
+                                }}
+                            >
+                                {restaurant.name}
+                            </button>
+                        </div>
+
+                    ))}
+
+                    {/**식당 메뉴 */}
+                    <div>
+                        <label>메뉴</label>
+                        <input
+                            value={menu}
+                            onChange={(e) => setMenu(e.target.value)}
+                            placeholder="먹은 메뉴를 입력하세요"
+                        />
                     </div>
 
-                ))}
-            </div>
+                    {/**식당 가격 */}
+                    <div>
+                        <label>가격 (선택)</label>
+                        <input
+                            value={price}
+                            type="number"
+                            onChange={(e) => setPrice(e.target.value)}
+                            placeholder="가격을 입력해주세요"
+                        />
+                    </div>
 
-            {/**식당 메뉴 */}
-            <div>
-                <label>메뉴</label>
-                <input
-                    value={menu}
-                    onChange={(e) => setMenu(e.target.value)}
-                    placeholder="먹은 메뉴를 입력하세요"
-                />
-            </div>
+                    {/**식당 별점 */}
+                    <div>
+                        <label>별점</label>
+                        <div>
+                            {[1, 2, 3, 4, 5].map((score) =>
+                                <button
+                                    key={score}
+                                    type="button"
+                                    onClick={() => setRating(score)}
+                                >
+                                    ⭐
+                                </button>
+                            )}
+                        </div>
+                    </div>
 
-            {/**식당 가격 */}
-            <div>
-                <label>가격 (선택)</label>
-                <input
-                    value={price}
-                    type="number"
-                    onChange={(e) => setPrice(e.target.value)}
-                    placeholder="가격을 입력해주세요"
-                />
-            </div>
+                    <div>
+                        <label>리뷰 내용</label>
 
-            {/**식당 별점 */}
-            <div>
-                <label>별점</label>
-                <div>
-                    {[1, 2, 3, 4, 5].map((score) =>
-                        <button
-                            key={score}
-                            type="button"
-                            onClick={() => setRating(score)}
-                        >
-                            ⭐
-                        </button>
-                    )}
+                        <textarea
+                            value={content}
+                            onChange={(e) => setContent(e.target.value)}
+                            placeholder="리뷰를 작성해주세요">
+                        </textarea>
+
+                    </div>
+
+                    <button type="button"
+                        onClick={handleSubmit}>
+                        리뷰 등록
+                    </button>
                 </div>
-            </div>
+            )}
+            {showReviews && (
+                <div>
+                    <h3>작성한 리뷰</h3>
 
-            <div>
-                <label>리뷰 내용</label>
-
-                <textarea
-                    value={content}
-                    onChange={(e) => setContent(e.target.value)}
-                    placeholder="리뷰를 작성해주세요">
-                </textarea>
-
-            </div>
-
-            <button type="button"
-                onClick={handleSubmit}>
-                리뷰 등록
-            </button>
+                    {selectedRestaurantReviews.map((review) => (
+                        <div key={review.id}>
+                            <p>⭐ {review.rating}</p>
+                            <p>{review.content}</p>
+                            <p>메뉴: {review.menu}</p>
+                            <button
+                                type="button"
+                                onClick={() => handleDeleteReview(review.id)}
+                            >
+                                삭제
+                            </button>
+                        </div>
+                    ))}
+                </div>
+            )}
         </div>
     );
 }

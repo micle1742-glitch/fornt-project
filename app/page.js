@@ -41,15 +41,19 @@ export default function Home() {
     return <p>등록된 식당이 없습니다.</p>
   }
 
-  {/** 식당 데이터에 자동으로 rating/reviewCount 붙이기(이해가안됨)*/ }
+  {/**식당 데이터에 자동으로 rating/reviewCount 붙이기 */ }
+  {/**restaurantsWithReview : 식당 전체 목록을 하나씩 돌면서 리뷰 정보를 붙인 새로운 식당 배열을 만들어라.
+    restaurantReviews : 현재 식당에 해당하는 리뷰들만 모아놓은 배열*/ }
   const restaurantsWithReview = data?.map((restaurant) => {
     const restaurantReviews =
       reviews?.filter(
         (review) => review.restaurantId === restaurant.id
       ) || [];
 
+    {/**모인 리뷰 배열의 개수를 세는 것.*/ }
     const reviewCount = restaurantReviews.length;
 
+    {/**restaurant.rating 별점 평균내는코드 */ }
     const rating =
       reviewCount > 0
         ? restaurantReviews.reduce(
@@ -78,6 +82,9 @@ export default function Home() {
   {/**보여지는 개수에 따라 자름 */ }
   const visbleRestaurants = searchedRestaurants.slice(0, visibleCount)
 
+  console.log("search:", search);
+  console.log("검색 결과:", searchedRestaurants.length);
+
 
 
   return (
@@ -92,6 +99,10 @@ export default function Home() {
           onChange={(e) => setSearch(e.target.value)}
         />
       </div>
+      
+      {search && searchedRestaurants.length === 0 && (
+        <p> 검색 결과가 없습니다 </p>
+      )}
 
       <div className="review-form">
         <h2>점심 리뷰 작성하기</h2>
@@ -108,12 +119,15 @@ export default function Home() {
         <button onClick={() => setCategory("양식")}>양식</button>
       </div>
 
+
       <div className="restaurant-grid">
+
         {visbleRestaurants.map((restaurant) => (
           <RestaurantCard
             key={restaurant.id}
             restaurant={restaurant} />
         ))}
+
         {/** 아직 안 보여준 식당이 있으면 더보기 버튼을 보여주고, 누르면 현재 카테고리의 식당을 전부 보여줘라."*/}
         {visibleCount < searchedRestaurants.length && (
           <button onClick={() => setVisibleCount(searchedRestaurants.length)}>
