@@ -1,130 +1,464 @@
-/* Page 2 전체 */
+/* =========================
+   Page 2 전체 (연초록 배경)
+   ========================= */
 .review-page {
-  max-width: 800px;
-  margin: 0 auto;
-  padding: 50px 24px 80px;
+  min-height: 100vh;
+  padding: 36px 24px 60px;
+  background: var(--green-light);
 }
 
-/* 오늘의 점심 추천 */
-.random-button {
-  width: 100%;
+.review-page > * {
+  max-width: 880px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* =========================
+   상단 문구 + 뽑기 버튼
+   ========================= */
+.review-hero {
+  position: relative;
   margin-bottom: 24px;
-  padding: 16px;
+  text-align: center;
+}
+
+.review-hero-sub {
+  margin: 0;
+  color: var(--green);
+  font-family: var(--font-hand), cursive;
+  font-size: 26px;
+}
+
+.review-hero h1 {
+  margin: 0 0 10px;
+  font-size: 34px;
+  font-weight: 800;
+}
+
+.review-hero-desc {
+  margin: 0 0 18px;
+  color: #555;
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+.random-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 48px;
   border: none;
-  border-radius: 12px;
-  background: #222;
+  border-radius: 999px;
+  background: var(--green);
   color: white;
-  font-size: 16px;
-  font-weight: 600;
+  font-size: 17px;
+  font-weight: 700;
   cursor: pointer;
+  box-shadow: 0 6px 16px rgba(63, 112, 70, 0.25);
+  transition: 0.2s;
 }
 
 .random-button:hover {
-  background: #444;
+  background: var(--green-dark);
+  transform: translateY(-2px);
 }
 
-/* 식당 상세 카드 */
+.review-hero-hint {
+  margin: 10px 0 0;
+  color: #777;
+  font-size: 13px;
+}
+
+/* =========================
+   히어로 장식선 (뿅뿅)
+   ========================= */
+.spark {
+  position: absolute;
+  width: 22px;
+  height: 22px;
+  pointer-events: none;
+}
+
+.spark::before,
+.spark::after {
+  content: "";
+  position: absolute;
+  width: 4px;
+  height: 14px;
+  border-radius: 2px;
+  background: var(--spark-color, #f2b632);
+}
+
+.spark::before {
+  left: 2px;
+  top: 0;
+  transform: rotate(-20deg);
+}
+
+.spark::after {
+  left: 13px;
+  top: 5px;
+  transform: rotate(25deg);
+}
+
+/* 손글씨 왼쪽 (초록) */
+.spark-1 {
+  top: 4px;
+  left: 24%;
+  --spark-color: #7fb07f;
+  transform: rotate(-40deg);
+}
+
+/* 오른쪽 위 (노랑) */
+.spark-2 {
+  top: 0;
+  right: 22%;
+  transform: rotate(40deg);
+}
+
+/* 버튼 왼쪽 (노랑) */
+.spark-3 {
+  bottom: 36px;
+  left: 26%;
+  transform: rotate(-70deg);
+}
+
+/* 버튼 오른쪽 (노랑) */
+.spark-4 {
+  bottom: 36px;
+  right: 26%;
+  transform: rotate(70deg);
+}
+
+/* =========================
+   식당 상세 카드 (가로형)
+   ========================= */
 .restaurant-detail {
-  overflow: hidden;
-  border: 1px solid #e5e5e5;
-  border-radius: 16px;
+  display: grid;
+  grid-template-columns: 0.9fr 1fr;
+  gap: 24px;
+  padding: 24px;
+  border-radius: 20px;
   background: white;
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.05);
 }
 
-/* 이미지 */
+/* 카드 상단 제목 */
+.detail-title {
+  grid-column: 1 / -1;
+  margin-bottom: -8px;
+  text-align: center;
+  font-size: 22px;
+  font-weight: 800;
+}
+
+.detail-title span {
+  color: var(--red);
+}
+
+.detail-title::before,
+.detail-title::after {
+  content: "";
+  display: inline-block;
+  width: 14px;
+  height: 3px;
+  border-radius: 2px;
+  background: #f2b632;
+  vertical-align: middle;
+}
+
+.detail-title::before {
+  margin-right: 12px;
+  transform: rotate(45deg);
+}
+
+.detail-title::after {
+  margin-left: 12px;
+  transform: rotate(-45deg);
+}
+
+/* 이미지: 오른쪽 정보 높이에 맞춰 늘어남 */
 .restaurant-detail-image {
+  position: relative;
+  overflow: hidden;
   width: 100%;
-  height: 280px;
+  min-height: 200px;
+  border-radius: 12px;
   background: #eeeeee;
+}
+
+.restaurant-detail-image img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 /* 식당 정보 */
 .restaurant-detail-info {
-  padding: 28px;
+  display: flex;
+  flex-direction: column;
+}
+
+.restaurant-detail-info h2,
+.restaurant-detail-info h3,
+.restaurant-detail-info p {
+  margin: 0;
+}
+
+.detail-badge {
+  align-self: flex-start;
+  margin-bottom: 8px;
+  padding: 3px 12px;
+  border-radius: 999px;
+  background: #fde3dc;
+  color: var(--red);
+  font-size: 13px;
+  font-weight: 600;
 }
 
 .restaurant-detail-info h2 {
-  margin-bottom: 12px;
-  font-size: 28px;
+  margin-bottom: 4px;
+  font-size: 22px;
 }
 
 .restaurant-detail-info p {
-  margin-bottom: 8px;
-  color: #666;
+  color: var(--sub);
 }
 
-/* 대표 리뷰 */
+.restaurant-detail-info .detail-price {
+  margin-top: 8px;
+  color: var(--red);
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.restaurant-detail-info .detail-rating {
+  margin-top: 2px;
+  color: var(--text);
+  font-weight: 600;
+}
+
+/* 대표 리뷰 (인용 박스) */
 .representative-review {
-  margin-top: 24px;
-  padding-top: 24px;
-  border-top: 1px solid #eee;
+  margin-top: 12px;
+  padding: 12px 16px;
+  border-radius: 12px;
+  background: #f6f6f3;
 }
 
 .representative-review h3 {
-  margin-bottom: 12px;
-  font-size: 17px;
+  margin-bottom: 4px;
+  font-size: 14px;
+  color: var(--sub);
 }
 
-.representative-review-content {
-  margin-bottom: 12px;
+.restaurant-detail-info .representative-review-content {
   color: #333;
+  line-height: 1.6;
 }
 
 /* 리뷰 없음 */
 .no-review {
-  margin-top: 24px;
-  padding-top: 24px;
-  border-top: 1px solid #eee;
+  margin-top: 12px;
+  padding: 14px 16px;
+  border-radius: 12px;
+  background: #f6f6f3;
+}
+
+.restaurant-detail-info .no-review p {
   color: #999;
 }
 
-/* 삭제 버튼 */
-.delete-review-button {
-  margin-top: 14px;
-  padding: 8px 14px;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  background: white;
-  color: #666;
-  cursor: pointer;
-}
-
-.delete-review-button:hover {
-  background: #f5f5f5;
-}
-
-/* 지도 / 찜하기 */
+/* =========================
+   지도 / 찜하기
+   ========================= */
 .detail-actions {
   display: flex;
   gap: 10px;
-  margin-top: 24px;
+  margin-top: auto;
+  padding-top: 14px;
 }
 
-.detail-actions button {
+.detail-actions .map-button,
+.detail-actions .like-button {
   flex: 1;
-  padding: 12px;
-  border: 1px solid #ddd;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 11px;
   border-radius: 8px;
-  background: white;
+  font-size: 15px;
+  font-weight: 600;
   cursor: pointer;
+  transition: 0.2s;
 }
 
-.detail-actions button:hover {
-  background: #f5f5f5;
+.detail-actions .map-button {
+  border: none;
+  background: var(--green);
+  color: white;
 }
 
-/* 모바일 */
+.detail-actions .map-button:hover {
+  background: var(--green-dark);
+}
+
+.detail-actions .like-button {
+  border: 1px solid #f0b8ae;
+  background: white;
+  color: var(--red);
+}
+
+.detail-actions .like-button:hover {
+  background: #fff4f1;
+}
+
+/* =========================
+   하단 슬로건 배너
+   ========================= */
+.slogan-banner {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+  max-width: 720px;
+  margin-top: 36px;
+  padding: 20px 24px;
+  border-radius: 18px;
+  background: #e3efdc;
+}
+
+.slogan-text {
+  margin: 0;
+  color: var(--green);
+  font-family: var(--font-hand), cursive;
+  font-size: 21px;
+}
+
+/* 그릇 일러스트 */
+.slogan-image {
+  flex-shrink: 0;
+  height: 48px;
+  width: auto;
+}
+/* 문구 왼쪽 장식 */
+.spark-5 {
+  top: calc(50% - 11px);
+  left: 14%;
+  transform: rotate(-60deg);
+}
+
+/* 이미지 오른쪽 위 장식 */
+.spark-6 {
+  top: 6px;
+  right: 14%;
+  transform: rotate(30deg);
+}
+/* =========================
+   빈 화면 (선택 전)
+   ========================= */
+.empty-state {
+  padding-top: 48px;
+  text-align: center;
+}
+
+/* 일러스트 자리 (empty.png 준비되면 img로 교체) */
+.empty-image {
+  width: 280px;
+  height: 200px;
+  margin: 0 auto 12px;
+}
+
+.empty-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.empty-state h1 {
+  margin: 0 0 12px;
+  font-size: 36px;
+  font-weight: 800;
+}
+
+.empty-desc {
+  margin: 0 0 24px;
+  color: #555;
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+/* 안내 카드 3개 */
+.feature-list {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+  max-width: 680px;
+  margin: 40px auto 0;
+}
+
+.feature-item {
+  padding: 22px 16px;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.6);
+}
+
+.feature-item h3 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  margin: 0 0 10px;
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.feature-item p {
+  margin: 0;
+  color: #666;
+  font-size: 14px;
+  line-height: 1.6;
+  white-space: pre-line;
+}
+/* =========================
+   모바일
+   ========================= */
 @media (max-width: 768px) {
   .review-page {
-    padding: 30px 16px 60px;
+    padding: 28px 16px 48px;
+  }
+
+  .review-hero h1 {
+    font-size: 26px;
+  }
+
+  .random-button {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .spark {
+    display: none;
+  }
+
+  .restaurant-detail {
+    grid-template-columns: 1fr;
+    padding: 20px;
   }
 
   .restaurant-detail-image {
-    height: 200px;
+    min-height: 200px;
+  }
+    .empty-state h1 {
+    font-size: 26px;
   }
 
-  .restaurant-detail-info {
-    padding: 20px;
+  .feature-list {
+    grid-template-columns: 1fr;
   }
 }

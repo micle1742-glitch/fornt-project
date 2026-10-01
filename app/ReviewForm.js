@@ -13,6 +13,7 @@ export default function ReviewForm() {
     const [price, setPrice] = useState("");
     const queryClient = useQueryClient();
     const [showReviews, setShowReviews] = useState(false);
+    const [hoverRating, setHoverRating] = useState(0) // 마우스가 올라간 별 점수 (0이면 안 올라간 상태)
 
 
 
@@ -118,110 +119,128 @@ export default function ReviewForm() {
 
     return (
         <div>
+            <h2 className="form-title">
+                <img src="/images/common/logo.png" alt="" />
+                점심 리뷰 작성하기
+            </h2>
+
             {/**식당 선택 */}
             {!showReviews && (
 
-                <div>
-                    <label>식당 선택</label>
-                    <input
-                        value={restaurantSearch}
-                        onChange={(e) => {
-                            setRestaurantSearch(e.target.value)
-                            setSelectedRestaurantId("")
-                        }}
-                        placeholder="식당을 검색하세요"
-                    />
+                <div className="form-grid">
+                    <div className="restaurant-field">
+                        <label>식당 선택<span className="required">*</span></label>
+                        <input
+                            value={restaurantSearch}
+                            onChange={(e) => {
+                                setRestaurantSearch(e.target.value)
+                                setSelectedRestaurantId("")
+                            }}
+                            placeholder="예) 순대실록"
+                        />
 
-                    {/** filteredRestaurants의 식당을 하나씩 꺼내 restaurant라는 이름으로 사용하고 
-                각 식당마다 div를 하나씩 만들어라*/}
-                    {!selectedRestaurantId && restaurantSearch && filteredRestaurants.map((restaurant) => (
-
-                        <div key={restaurant.id}>
-                            {/**식당이름화면에보여줌 식당id데이터연결용으로저장 */}
-                            <button
-                                type="button"
-                                onClick={() => {
-                                    setSelectedRestaurantId(restaurant.id)
-                                    setRestaurantSearch(restaurant.name)
-                                }}
-                            >
-                                {restaurant.name}
-                            </button>
-                        </div>
-
-                    ))}
+                        {/** 입력한 검색어가 있고 아직 식당을 고르지 않았을 때만 드롭다운 표시 */}
+                        {!selectedRestaurantId && restaurantSearch && (
+                            <div className="restaurant-results">
+                                {filteredRestaurants.map((restaurant) => (
+                                    <button
+                                        key={restaurant.id}
+                                        type="button"
+                                        onClick={() => {
+                                            setSelectedRestaurantId(restaurant.id)
+                                            setRestaurantSearch(restaurant.name)
+                                        }}
+                                    >
+                                        {restaurant.name}
+                                    </button>
+                                ))}
+                            </div>
+                        )}
+                    </div>
 
                     {/**식당 메뉴 */}
                     <div>
-                        <label>메뉴</label>
+                        <label>메뉴<span className="required">*</span></label>
                         <input
                             value={menu}
                             onChange={(e) => setMenu(e.target.value)}
-                            placeholder="먹은 메뉴를 입력하세요"
+                            placeholder="예) 제육볶음"
                         />
                     </div>
 
                     {/**식당 가격 */}
-                    <div>
+                    <div className="price-field">
                         <label>가격 (선택)</label>
                         <input
                             value={price}
                             type="number"
                             onChange={(e) => setPrice(e.target.value)}
-                            placeholder="가격을 입력해주세요"
+                            placeholder="예) 10000"
                         />
                     </div>
 
-                    {/**식당 별점 */}
-                    <div>
-                        <label>별점</label>
-                        <div>
-                            {[1, 2, 3, 4, 5].map((score) =>
-                                <button
-                                    key={score}
-                                    type="button"
-                                    onClick={() => setRating(score)}
-                                >
-                                    ⭐
-                                </button>
-                            )}
-                        </div>
-                    </div>
-
-                    <div>
-                        <label>리뷰 내용</label>
-
+                    {/**식당 리뷰 */}
+                    <div className="review-field">
+                        <label>한 줄 리뷰</label>
                         <textarea
                             value={content}
                             onChange={(e) => setContent(e.target.value)}
                             placeholder="리뷰를 작성해주세요">
                         </textarea>
+                    </div>
 
+                    {/**식당 별점 ⭐*/}
+                    <div className="rating-row">
+                        <label>별점</label>
+                        <div className="star-rating"
+                             onMouseLeave={() => setHoverRating(0)}
+                             >
+                            {[1, 2, 3, 4, 5].map((score) => (
+                                <button
+                                    key={score}
+                                    type="button"
+                                    className={score <= (hoverRating || rating) ? "star active" : "star"}
+                                    onClick={() => setRating(score)}
+                                    onMouseEnter={() => setHoverRating(score)}
+                                >
+                                    ★
+                                </button>
+                            ))}
+                        </div>
                     </div>
 
                     <button type="button"
+                        className="submit-button"
                         onClick={handleSubmit}>
-                        리뷰 등록
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" strokeWidth="2"
+                            strokeLinecap="round" strokeLinejoin="round">
+                            <path d="M12 20h9" />
+                            <path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z" />
+                        </svg>
+                        리뷰 등록하기
                     </button>
                 </div>
             )}
+
             {showReviews && (
                 <div>
                     <h3>작성한 리뷰</h3>
-
-                    {selectedRestaurantReviews.map((review) => (
-                        <div key={review.id}>
-                            <p>⭐ {review.rating}</p>
-                            <p>{review.content}</p>
-                            <p>메뉴: {review.menu}</p>
-                            <button
-                                type="button"
-                                onClick={() => handleDeleteReview(review.id)}
-                            >
-                                삭제
-                            </button>
-                        </div>
-                    ))}
+                    <div className="review-list">
+                        {selectedRestaurantReviews.map((review) => (
+                            <div className="review-item" key={review.id}>
+                                <p>⭐ {review.rating}</p>
+                                <p>{review.content}</p>
+                                <p>메뉴: {review.menu}</p>
+                                <button
+                                    type="button"
+                                    onClick={() => handleDeleteReview(review.id)}
+                                >
+                                    삭제
+                                </button>
+                            </div>
+                        ))}
+                    </div>
                 </div>
             )}
         </div>

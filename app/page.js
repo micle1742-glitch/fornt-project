@@ -61,11 +61,17 @@ export default function Home() {
           0
         ) / reviewCount
         : null;
+      {/** 가장 최근 리뷰 (없으면 null) */}
+      const latestReview = 
+      reviewCount > 0
+       ? restaurantReviews[restaurantReviews.length -1]
+        : null;
 
     return {
       ...restaurant,
       rating,
       reviewCount,
+      latestReview,
     };
   });
 
@@ -85,13 +91,48 @@ export default function Home() {
   console.log("search:", search);
   console.log("검색 결과:", searchedRestaurants.length);
 
+  {/** 카테고리버튼 배열만들기 */ }
+  const categories = ["전체", "한식", "중식", "일식", "양식"];
+
 
 
   return (
     <main>
-      <h1>식권대장 뭐먹지</h1>
+      <section className="hero">
+        <div className="hero-text">
+          <h1>
+            오늘도 맛있는 점심,
+            <br />
+            함께 공유해요!
+          </h1>
+          <p>
+            우리 동네 점심 맛집, 직접 먹어보고 리뷰를 남겨주세요.
+            <br />
+            다른 사람들의 맛있는 점심 선택에 도움이 됩니다.
+          </p>
+        </div>
 
-      <div>
+        <div className="hero-image">
+           <img src="/images/main/hero.png" alt="점심 일러스트" />
+
+        </div>
+      </section>
+
+
+
+      <div className="review-form">
+        <ReviewForm />
+      </div>
+
+      <div className="search-box">
+        <span className="search-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" strokeWidth="2"
+            strokeLinecap="round" strokeLinejoin="round">
+            <circle cx="11" cy="11" r="7" />
+            <line x1="21" y1="21" x2="16.5" y2="16.5" />
+          </svg>
+        </span>
         <input
           type="text"
           placeholder="식당 이름이나 메뉴를 검색하세요"
@@ -99,24 +140,21 @@ export default function Home() {
           onChange={(e) => setSearch(e.target.value)}
         />
       </div>
-      
+
       {search && searchedRestaurants.length === 0 && (
         <p> 검색 결과가 없습니다 </p>
       )}
 
-      <div className="review-form">
-        <h2>점심 리뷰 작성하기</h2>
-        <ReviewForm />
-
-
-      </div>
-
       <div className="category-buttons">
-        <button onClick={() => setCategory("전체")}>전체</button>
-        <button onClick={() => setCategory("한식")}>한식</button>
-        <button onClick={() => setCategory("중식")}>중식</button>
-        <button onClick={() => setCategory("일식")}>일식</button>
-        <button onClick={() => setCategory("양식")}>양식</button>
+        {categories.map((item) => (
+          <button
+            key={item}
+            className={category === item ? "active" : ""}
+            onClick={() => setCategory(item)}
+          >
+            {item}
+          </button>
+        ))}
       </div>
 
 
