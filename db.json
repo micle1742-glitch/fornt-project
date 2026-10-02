@@ -244,6 +244,14 @@
       "menu": "순대국",
       "price": 10000,
       "id": "0INyo0DC20I"
+    },
+    {
+      "restaurantId": "5",
+      "rating": 5,
+      "content": "ㅎㅎㅎㅎㅎㅎ",
+      "menu": "료료",
+      "price": 8999,
+      "id": "cnEDqLbluWI"
     }
   ],
   "$schema": "./node_modules/json-server/schema.json"
